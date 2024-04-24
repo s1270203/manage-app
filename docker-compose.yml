@@ -1,0 +1,20 @@
+# doccker compose　のファイル形式のバージョン
+version: "3.9"
+services:
+  app:
+    # コンテナ名
+    container_name: manage_app
+    # コンテナの　. にDockerfileをビルドする
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # ./reactのフォルダをコンテナの /usr/src/app　にマウントする
+    volumes:
+      - ./react:/usr/src/app
+    #　作業ディレクトリに指定 Docker内でのパス
+    working_dir: /usr/src/app
+    # PCのポート:コンテナのポート
+    ports:
+      - 3000:3000
+    # コンテナでのコマンド　-c でDocker起動直後に実行するように指定
+    command: /bin/bash -c "npm install && npm run start"
